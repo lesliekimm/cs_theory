@@ -76,7 +76,25 @@ class LinkedList:
     if self.is_empty():
       raise Exception("Cannot remove duplicates from an empty list.")
 
-    # current = self.head
+    current = self.head
+    while current is not None:
+      previous = current
+      if current.next is not None:
+        temp = current.next
+        while temp is not None:
+          if (temp.data == current.data):
+            previous.next = temp.next
+            if (temp is not self.tail):
+              temp = temp.next
+            else:
+              self.tail = previous
+              temp = temp.next
+              previous = previous.next
+            self.count -= 1
+          else:
+            temp = temp.next
+            previous = previous.next
+      current = current.next
     return
 
   # returns number of nodes in LL
