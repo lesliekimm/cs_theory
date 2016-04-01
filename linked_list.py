@@ -8,7 +8,7 @@ class LinkedList:
 
   # create and insert a new node at front of LL
   def insert(self, data):
-    if (self.count == 0):
+    if self.is_empty():
       self.head = Node(data)
       self.tail = self.head
     else:
@@ -19,7 +19,7 @@ class LinkedList:
 
   # remove kth node from front of LL
   def remove(self, index):
-    if (self.count == 0):
+    if self.is_empty():
       raise Exception("Cannot remove element from empty list.")
     if (index < 0 or index >= self.count):
       raise TypeError("Index is out of bounds.")
@@ -43,13 +43,35 @@ class LinkedList:
     self.count -= 1
 
   def remove_dup(self):
-    if (self.count == 0):
+    if self.is_empty():
       raise Exception("Cannot remove duplicates from an empty list.")
     
+    current = self.head
+    dups = {}
 
+    dups[current.data] = True
+    previous = current
+    current = current.next
 
+    while current is not None:
+      if dups.has_key(current.data):
+        previous.next = current.next
+        if current.next is None:
+          self.tail = previous
+          current = None
+        else:
+          current = current.next.next
+        self.count -= 1
+      else:
+        dups[current.data] = True
+        previous = current
+        current = current.next
 
-  # chekcs to see if LL is empty or not
+  # returns number of nodes in LL
+  def get_count(self):
+    return self.count
+
+  # check to see if LL is empty or not
   def is_empty(self):
     if (self.count == 0):
       return True

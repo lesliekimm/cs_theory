@@ -75,12 +75,76 @@ class TestNodeClass(unittest.TestCase):
     with self.assertRaises(Exception):
       self.myLL.remove_dup()
 
-  # def test_remove_dup_with_one_dup_node(self):
-  #   return
+  def test_remove_dup_with_one_dup_node(self):
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+    self.myLL.insert(4)
+    self.myLL.insert(2)
+    self.myLL.insert(5)
 
-  # def test_remove_dup_with_multiple_dup_nodes(self):
+    self.myLL.remove_dup()    
+    self.assertEqual(self.myLL.count, 5)
+    self.assertEqual(self.myLL.tail.data, 5)
+
+  def test_remove_dup_with_one_dup_node_at_end(self):
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+    self.myLL.insert(4)
+    self.myLL.insert(5)
+    self.myLL.insert(2)
+
+    self.myLL.remove_dup()    
+    self.assertEqual(self.myLL.count, 5)
+    self.assertEqual(self.myLL.tail.data, 5)
+    
+  def test_remove_dup_with_one_dup_node_multiple_times(self):
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+    self.myLL.insert(4)
+    self.myLL.insert(2)
+    self.myLL.insert(2)
+    self.myLL.insert(5)
+    self.myLL.insert(2)
+
+    self.myLL.remove_dup()    
+    self.assertEqual(self.myLL.count, 5)
+    self.assertEqual(self.myLL.tail.data, 5)
+
+  def test_remove_dup_with_multiple_dup_nodes(self):
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+    self.myLL.insert(1)
+    self.myLL.insert(4)
+    self.myLL.insert(2)
+    self.myLL.insert(2)
+    self.myLL.insert(5)
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+
+    self.myLL.remove_dup()    
+    self.assertEqual(self.myLL.count, 5)
+    self.assertEqual(self.myLL.tail.data, 5)
+
   
-  # def test_remove_dup_from_LL_with_no_dups(self):
+  def test_remove_dup_from_LL_with_no_dups(self):
+    self.myLL.insert(1)
+    self.myLL.insert(2)
+    self.myLL.insert(3)
+    self.myLL.insert(4)
+    self.myLL.insert(5)
+    self.myLL.insert(6)
+
+    before = self.myLL.count
+    self.myLL.remove_dup()
+
+    self.assertEqual(before, self.myLL.count)
 
 
 
