@@ -42,8 +42,12 @@ class LinkedList:
 
     self.count -= 1
 
-  # def remove_dup(self):
+  def remove_dup(self):
+    if (self.count == 0):
+      raise Exception("Cannot remove duplicates from an empty list.")
     
+
+
 
   # chekcs to see if LL is empty or not
   def is_empty(self):

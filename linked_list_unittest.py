@@ -71,7 +71,16 @@ class TestNodeClass(unittest.TestCase):
     self.myLL.insert(1)
     self.assertEqual(self.myLL.is_empty(), False)
 
-  # def test_remove_dup(self):
+  def test_remove_dup_from_empty_LL(self):
+    with self.assertRaises(Exception):
+      self.myLL.remove_dup()
+
+  # def test_remove_dup_with_one_dup_node(self):
+  #   return
+
+  # def test_remove_dup_with_multiple_dup_nodes(self):
+  
+  # def test_remove_dup_from_LL_with_no_dups(self):
 
 
 
