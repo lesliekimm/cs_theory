@@ -16,6 +16,7 @@ class LinkedList:
       self.tail = self.tail.next
 
     self.count += 1
+    return
 
   # remove kth node from front of LL
   def remove(self, index):
@@ -41,7 +42,9 @@ class LinkedList:
         current.next = current.next.next
 
     self.count -= 1
+    return
 
+  # remove duplicate nodes
   def remove_dup(self):
     if self.is_empty():
       raise Exception("Cannot remove duplicates from an empty list.")
@@ -60,12 +63,21 @@ class LinkedList:
           self.tail = previous
           current = None
         else:
-          current = current.next.next
+          current = current.next
         self.count -= 1
       else:
         dups[current.data] = True
         previous = current
         current = current.next
+    return
+
+  # remove duplicate nodes without a buffer
+  def remove_dup_no_buffer(self):
+    if self.is_empty():
+      raise Exception("Cannot remove duplicates from an empty list.")
+
+    # current = self.head
+    return
 
   # returns number of nodes in LL
   def get_count(self):
@@ -83,6 +95,7 @@ class LinkedList:
     while current is not None:
       print current
       current = current.next
+    return
 
   # create and insert new node at back of LL
 
