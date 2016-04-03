@@ -101,9 +101,16 @@ class LinkedList:
   def get_from_end(self, k):
     if self.is_empty():
       raise Exception("Nothing to return from an empty list.")
-    if (k < 0 or k > self.count):
+    if (k <= 0 or k > self.count):
       raise TypeError("Position k is out of bounds.")
-    return
+
+    position_from_front = self.count - k + 1
+
+    current = self.head
+    
+    for x in range(0, position_from_front - 1):
+      current = current.next
+    return current.data
 
   # returns number of nodes in LL
   def get_count(self):
