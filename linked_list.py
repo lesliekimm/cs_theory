@@ -99,6 +99,10 @@ class LinkedList:
 
   # returns data of kth node from the end of the LL
   def get_from_end(self, k):
+    if self.is_empty():
+      raise Exception("Nothing to return from an empty list.")
+    if (k < 0 or k > self.count):
+      raise TypeError("Position k is out of bounds.")
     return
 
   # returns number of nodes in LL

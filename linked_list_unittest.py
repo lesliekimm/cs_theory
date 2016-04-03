@@ -193,9 +193,9 @@ class TestNodeClass(unittest.TestCase):
 
   def test_get_kth_to_last_elem_in_empty_LL_out_of_bounds(self):
     with self.assertRaises(TypeError):
-      self.myLL.get_from_end(8)
+      self.myLL1.get_from_end(8)
     with self.assertRaises(TypeError):
-      self.myLL.get_from_end(-1) 
+      self.myLL1.get_from_end(-1) 
 
   def test_get_kth_to_last_elem_in_LL_at_tail(self):
     val = self.myLL1.get_from_end(1)
