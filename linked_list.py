@@ -97,6 +97,9 @@ class LinkedList:
       current = current.next
     return
 
+  def get_from_end(self):
+    return
+
   # returns number of nodes in LL
   def get_count(self):
     return self.count
