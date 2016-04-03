@@ -183,5 +183,27 @@ class TestNodeClass(unittest.TestCase):
     self.myLL.insert(1)
     self.assertEqual(self.myLL.is_empty(), False)
 
+  def find_kth_to_last_elem_in_LL(self):
+    val = self.myLL1.find_from_end(3)
+    self.assertEqual(val, 4)
+
+  def find_kth_to_last_elem_in_empty_LL(self):
+    with self.assertRaises(Exception):
+      self.myLL.find_from_end(3)
+
+  def find_kth_to_last_elem_in_empty_LL_out_of_bounds(self):
+    with self.assertRaises(TypeError):
+      self.myLL.find_from_end(8)
+    with self.assertRaises(TypeError):
+      self.myLL.find_from_end(-1) 
+
+  def find_kth_to_last_elem_in_LL_at_tail(self):
+    val = self.myLL1.find_from_end(1)
+    self.assertEqual(val, 6)
+
+  def find_kth_to_last_elem_in_LL_at_head(self):
+    val = self.myLL1.find_from_end(6)
+    self.assertEqual(val, 1)
+
 if __name__ == '__main__':
     unittest.main()
