@@ -97,7 +97,8 @@ class LinkedList:
       current = current.next
     return
 
-  def get_from_end(self):
+  # returns data of kth node from the end of the LL
+  def get_from_end(self, k):
     return
 
   # returns number of nodes in LL
