@@ -213,6 +213,14 @@ class TestNodeClass(unittest.TestCase):
     newLL = self.myLL1.delete_middle_node(ptr)
     self.assertEqual(newLL.count, 5)
 
+  def test_delete_middle_node_nonexistant(self):
+    ptr = self.myLL1.head
+    for x in range(0, 6):
+      ptr = ptr.next
+
+    with self.assertRaises(Exception):
+      self.myLL.delete_middle_node(ptr)
+
   # def test_kth_to_last_recurisve_in_LL(self):
   #   val = self.myLL1.kth_to_last_recursive(self.myLL1.head, 3)
   #   self.assertEqual(val, 4)

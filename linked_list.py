@@ -132,6 +132,9 @@ class LinkedList:
 
   # delete the middle node given access only to that node
   def delete_middle_node(self, ptr):
+    if ptr is None:
+      raise TypeError("Cannot delete nonexistant node.")
+
     first_half = LinkedList()
     current = self.head
 
