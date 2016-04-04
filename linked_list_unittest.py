@@ -5,7 +5,7 @@ from linked_list import LinkedList
 class TestNodeClass(unittest.TestCase):
   def setUp(self):
     self.myLL = LinkedList()
-    
+
     self.myLL1 = LinkedList()
     self.myLL1.insert(1)
     self.myLL1.insert(2)
@@ -205,27 +205,35 @@ class TestNodeClass(unittest.TestCase):
     val = self.myLL1.kth_to_last(6)
     self.assertEqual(val, 1)
 
-  def test_kth_to_last_recurisve_in_LL(self):
-    val = self.myLL1.kth_to_last_recursive(self.myLL1.head, 3)
-    self.assertEqual(val, 4)
+  def test_delete_middle_node(self):
+    ptr = self.myLL1.head
+    for x in range(0, 3):
+      ptr = ptr.next
 
-  def test_kth_to_last_recurisve_in_empty_LL(self):
-    with self.assertRaises(Exception):
-      self.myLL.kth_to_last_recursive(self.myLL.head, 3)
+    newLL = self.myLL1.delete_middle_node(ptr)
+    self.assertEqual(newLL.count, 5)
 
-  def test_kth_to_last_recurisve_in_empty_LL_out_of_bounds(self):
-    with self.assertRaises(TypeError):
-      self.myLL1.kth_to_last_recursive(self.myLL1.head, 8)
-    with self.assertRaises(TypeError):
-      self.myLL1.kth_to_last_recursive(self.myLL1.head, -1) 
+  # def test_kth_to_last_recurisve_in_LL(self):
+  #   val = self.myLL1.kth_to_last_recursive(self.myLL1.head, 3)
+  #   self.assertEqual(val, 4)
 
-  def test_kth_to_last_recurisve_in_LL_at_tail(self):
-    val = self.myLL1.kth_to_last_recursive(self.myLL1.head, 1)
-    self.assertEqual(val, 6)
+  # def test_kth_to_last_recurisve_in_empty_LL(self):
+  #   with self.assertRaises(Exception):
+  #     self.myLL.kth_to_last_recursive(myLL.head, 3)
 
-  def test_kth_to_last_recurisve_in_LL_at_head(self):
-    val = self.myLL1.kth_to_last_recursive(self.myLL1.head, 6)
-    self.assertEqual(val, 1)
+  # def test_kth_to_last_recurisve_in_empty_LL_out_of_bounds(self):
+  #   with self.assertRaises(TypeError):
+  #     self.myLL1.kth_to_last_recursive(myLL1.head, 8)
+  #   with self.assertRaises(TypeError):
+  #     self.myLL1.kth_to_last_recursive(myLL1.head, -1) 
+
+  # def test_kth_to_last_recurisve_in_LL_at_tail(self):
+  #   val = self.myLL1.kth_to_last_recursive(myLL1.head, 1)
+  #   self.assertEqual(val, 6)
+
+  # def test_kth_to_last_recurisve_in_LL_at_head(self):
+  #   val = self.myLL1.kth_to_last_recursive(myLL1.head, 6)
+  #   self.assertEqual(val, 1)
 
 if __name__ == '__main__':
     unittest.main()

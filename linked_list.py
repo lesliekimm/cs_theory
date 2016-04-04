@@ -6,6 +6,24 @@ class LinkedList:
     self.tail = None
     self.count = 0
 
+  # returns number of nodes in LL
+  def get_count(self):
+    return self.count
+
+  # check to see if LL is empty or not
+  def is_empty(self):
+    if (self.count == 0):
+      return True
+    return False
+
+  # print list
+  def print_list(self):
+    current = self.head
+    while current is not None:
+      print current
+      current = current.next
+    return
+
   # create and insert a new node at front of LL
   def insert(self, data):
     if self.is_empty():
@@ -98,7 +116,7 @@ class LinkedList:
     return
 
   # returns data of kth node from the end of the LL
-  def get_from_end(self, k):
+  def kth_to_last(self, k):
     if self.is_empty():
       raise Exception("Nothing to return from an empty list.")
     if (k <= 0 or k > self.count):
@@ -112,23 +130,38 @@ class LinkedList:
       current = current.next
     return current.data
 
-  # returns number of nodes in LL
-  def get_count(self):
-    return self.count
-
-  # check to see if LL is empty or not
-  def is_empty(self):
-    if (self.count == 0):
-      return True
-    return False
-
-  # print list
-  def print_list(self):
+  # delete the middle node given access only to that node
+  def delete_middle_node(self, ptr):
+    first_half = LinkedList()
     current = self.head
-    while current is not None:
-      print current
+
+    while current is not ptr:
+      first_half.insert(current.data)
       current = current.next
-    return
+
+    second_half = LinkedList()
+    second_half.head = ptr.next
+
+    first_half.tail.next = second_half.head
+    first_half.count = self.count - 1
+    return first_half
+
+  # returns data of kth node from the end of the LL using recursion
+  # def kth_to_last_recursive(self, current, k):
+  #   if self.is_empty():
+  #     raise Exception("Nothing to return from an empty list.")
+  #   if (k <= 0 or k > self.count):
+  #     raise TypeError("Position k is out of bounds.")
+
+  #   if current is None:
+  #     raise TypeError("Position k is out of bounds.")
+
+  #   if (k == 0):
+  #     return current.data
+  #   return self.kth_to_last_recusive(current.next, k - 1)      
+
+
+
 
   # create and insert new node at back of LL
 
