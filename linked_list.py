@@ -113,7 +113,7 @@ class LinkedList:
             temp = temp.next
             previous = previous.next
       current = current.next
-    return
+    return None
 
   # returns data of kth node from the end of the LL
   def kth_to_last(self, k):
@@ -129,6 +129,20 @@ class LinkedList:
     for x in range(0, position_from_front - 1):
       current = current.next
     return current.data
+
+  # returns data of kth node from the end of the LL using recursion
+  # def kth_to_last_recursive(self, current, k):
+  #   if self.is_empty():
+  #     raise Exception("Nothing to return from an empty list.")
+  #   if (k <= 0 or k > self.count):
+  #     raise TypeError("Position k is out of bounds.")
+
+  #   if current is None:
+  #     raise TypeError("Position k is out of bounds.")
+
+  #   if (k == 0):
+  #     return current.data
+  #   return self.kth_to_last_recusive(current.next, k - 1)  
 
   # delete the middle node given access only to that node
   def delete_middle_node(self, ptr):
@@ -148,22 +162,32 @@ class LinkedList:
     first_half.tail.next = second_half.head
     first_half.count = self.count - 1
     return first_half
+    
+  # partition LL around x
+  def partition(self, x):
+    if self.is_empty():
+      raise Exception("Cannot partition empty linked list.")
 
-  # returns data of kth node from the end of the LL using recursion
-  # def kth_to_last_recursive(self, current, k):
-  #   if self.is_empty():
-  #     raise Exception("Nothing to return from an empty list.")
-  #   if (k <= 0 or k > self.count):
-  #     raise TypeError("Position k is out of bounds.")
+    first_LL = LinkedList()
+    second_LL = LinkedList()
 
-  #   if current is None:
-  #     raise TypeError("Position k is out of bounds.")
+    current = self.head
+    for y in range(0, self.count):
+      if (current.data < x):
+        first_LL.insert(current.data)
+      else:
+        second_LL.insert(current.data)
+      current = current.next
 
-  #   if (k == 0):
-  #     return current.data
-  #   return self.kth_to_last_recusive(current.next, k - 1)      
+    if first_LL.is_empty():
+      return second_LL
+    if second_LL.is_empty():
+      return first_LL
 
-
+    first_LL.tail.next = second_LL.head
+    first_LL.tail = second_LL.tail
+    first_LL.count += second_LL.count
+    return first_LL
 
 
   # create and insert new node at back of LL
