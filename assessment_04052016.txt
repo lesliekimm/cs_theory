@@ -1,0 +1,27 @@
+Conceptual Challenges
+
+No outside resources
+
+Alternative Resizable Array
+Each array could be a node in a linked list when an array is full, create a new node with an array
+that is added to the linked list.
+
+Implement a Queue
+For a resizable array, this would not be the best option because as items are being dequeued, you would
+need to shift items in the array one position towards the front. Enqueue would be O(1) with  constant
+access to the end of the array, but dequeue would be O(n) to move everything over one position. Size would
+be O(1).
+
+I have never used buffers.
+
+I would use a singly linked list.
+For a singly linked list, you could just set head to head.next to remove from the queue and append
+to add an item to the queue & assign tail to tail.next. Enqueue for singly linked list is O(1) constant
+because you can access the item that needs to be added in constant time. Same with dequeue. Not sure what
+`front` is. If `front` is `peek`, that is O(1). I assume `size` is being kept track of in the LL class so
+this would also be O(1), but if it wasn't, this would be O(n).
+
+Hash Table Buckets
+Using another array would be the same as a linked list because to access items, you'd have to search each
+index in the array to see if it's the item you are looking for. And to avoid the issue of resizing arrays
+a resizable array would be needed. Not sure how to use another hash table.
