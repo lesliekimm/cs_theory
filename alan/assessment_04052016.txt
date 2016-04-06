@@ -11,8 +11,21 @@ For a resizable array, this would not be the best option because as items are be
 need to shift items in the array one position towards the front. Enqueue would be O(1) with  constant
 access to the end of the array, but dequeue would be O(n) to move everything over one position. Size would
 be O(1).
+  - enqueue at the end - O(1)
+  - dequeue will either leave a lot of empty indices or you can shift all items but that is O(n) operation
+    - when you resize, you can get rid of empty space in front and now your new array only has the elements
+      that remain in the array and then you have a ton of extra space and won't be resizing as often
+
+  - similarities between resizable array & circular buffer
+    - you could build a resizable circular buffer (b/c circular buffer has fixed space but resizable array
+      doesn't)
+
 
 I have never used buffers.
+  - class notes
+  Circular buffer is a form of an array where you would mod the index to figure out which index an item is
+  pushed into. Has constant time to put something new in, constant time to take something old out. Only
+  viable under the condition that you know the max size of a queue which is common.
 
 I would use a singly linked list.
 For a singly linked list, you could just set head to head.next to remove from the queue and append
