@@ -162,6 +162,7 @@ def change_recursive(coins, amount):
 # and for without recursion, the outer while loop is n, but how do i
 # calculate the inner loop?
 
+# this will return the first pair found
 def find_pair(numbers, target):
   for x in range (0, len(numbers)):
     for y in range(x + 1, len(numbers)):
@@ -175,10 +176,29 @@ def find_pair_test():
   # print find_pair([1, 5, 4, 1, 7, -2], 10)
   print find_pair([1, 5, 4, 1, 7, -2], 5)
 
+print "finding pairs"
 find_pair_test()
 
 
+def find_all_pair(numbers, target):
+  list_of_pairs = []
+  for x in range (0, len(numbers)):
+    for y in range(x + 1, len(numbers)):
+      if (numbers[x] + numbers[y]) == target:
+        list_of_pairs.append((numbers[x], numbers[y]))
 
+  if len(list_of_pairs) == 0:
+    raise Exception("No pairs found.")
+  else:
+    return list_of_pairs
+
+def find_all_pairs_test():
+  print find_all_pair([1, 5, 4, 1, 7, -2, -1, -2], 3)
+  # print find_all_pair([1, 5, 4, 1, 7, -2], 10)
+  print find_all_pair([1, 5, 4, 1, 7, -2], 5)
+
+print "finding all pairs"
+find_all_pairs_test()
 
 
 
