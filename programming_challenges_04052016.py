@@ -117,6 +117,8 @@ def fix_stack_test():
 # return list of coins to return as change given paramters of array of coin denominations and amount given
 # first try - assuming coins in order highest to smallest
 def change(coins, amount):
+  coins.sort()        # second try - coins don't need to be in order now
+  coins.reverse()
   change_list = []
 
   index = 0
@@ -131,6 +133,8 @@ def change(coins, amount):
 print change([25, 10, 5, 1], 42)
 print change([25, 5, 1], 42)
 print change([25, 10, 1], 42)
+print change([10, 1, 25, 5], 42)
+
 
 
 
