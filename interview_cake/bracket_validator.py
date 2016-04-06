@@ -80,12 +80,12 @@ def validator(string):
       elif bracketStack.peek() == '[' and string_chars[x] == ']':
         bracketStack.pop()
       else:
-        return "False"
+        return False
 
   if bracketStack.get_size() != 0:
-    return "False"
+    return False
 
-  return "True"
+  return True
 
 
 
