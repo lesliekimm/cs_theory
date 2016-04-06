@@ -136,8 +136,8 @@ def change_test():
   print change([25, 10, 1], 42)
   print change([10, 1, 25, 5], 42)
 
-print "change without recursion"
-change_test()
+# print "change without recursion"
+# change_test()
 
 # do it recursively
 def change_recursive(coins, amount):
@@ -154,11 +154,35 @@ def change_recursive(coins, amount):
 
   return change_list
 
-print "change with recursion"
-change_test()
+# print "change with recursion"
+# change_test()
 
 # recursion didn't make it shorter or easier. is runtime of recursion
 # O(n^2)?
 # and for without recursion, the outer while loop is n, but how do i
 # calculate the inner loop?
+
+def find_pair(numbers, target):
+  for x in range (0, len(numbers)):
+    for y in range(x + 1, len(numbers)):
+      if (numbers[x] + numbers[y]) == target:
+        return (numbers[x], numbers[y])
+
+  raise Exception("No pairs found.")
+
+def find_pair_test():
+  print find_pair([1, 5, 4, 1, 7, -2], 3)
+  # print find_pair([1, 5, 4, 1, 7, -2], 10)
+  print find_pair([1, 5, 4, 1, 7, -2], 5)
+
+find_pair_test()
+
+
+
+
+
+
+
+
+
 
