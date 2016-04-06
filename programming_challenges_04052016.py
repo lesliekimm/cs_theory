@@ -36,6 +36,9 @@ class Stack:
   def get_size(self):
     return self.size
 
+  # LK - what do you mean by avoid instantiating new data structure?
+  # the original question said to mutate the existing stack. is this
+  # something different?
   def fix_stack(self):
     if self.size == 0:
       raise Exception("Empty stack, nothing to fix.")
@@ -56,59 +59,78 @@ class Stack:
       temp1.data = val2
       temp2.data = val1
 
+# used to test
+def fix_stack_test():
+  myStack = Stack()
+  print "size"
+  print myStack.get_size()
 
-myStack = Stack()
-print "size"
-print myStack.get_size()
+  myStack.push(2)
+  myStack.push(1)
+  myStack.push(3)
+  myStack.push(4)
+  myStack.push(5)
 
-myStack.push(2)
-myStack.push(1)
-myStack.push(3)
-myStack.push(4)
-myStack.push(5)
+  print "current stack"
+  current = myStack.head
+  for x in range(0, myStack.size):
+    print current.data
+    current = current.next
 
-print "current stack"
-current = myStack.head
-for x in range(0, myStack.size):
-  print current.data
-  current = current.next
+  myStack.fix_stack()
 
-myStack.fix_stack()
+  print "fixed stack"
+  current = myStack.head
+  for x in range(0, myStack.size):
+    print current.data
+    current = current.next
 
-print "fixed stack"
-current = myStack.head
-for x in range(0, myStack.size):
-  print current.data
-  current = current.next
+  print "current stack"
+  current = myStack.head
+  for x in range(0, myStack.size):
+    print current.data
+    current = current.next
+
+  print "popping"
+  print myStack.pop()
+
+  print "current stack"
+  current = myStack.head
+  for x in range(0, myStack.size):
+    print current.data
+    current = current.next
+
+  print "popping"
+  print myStack.pop()
+
+  print "current stack"
+  current = myStack.head
+  for x in range(0, myStack.size):
+    print current.data
+    current = current.next
+
+  print "peeking"
+  print myStack.peek()
+
+# fix_stack_test()
+
+# return list of coins to return as change given paramters of array of coin denominations and amount given
+# first try - assuming coins in order highest to smallest
+def change(coins, amount):
+  change_list = []
+
+  index = 0
+  while index < len(coins):
+    while amount >= coins[index]:
+      change_list.append(coins[index])
+      amount -= coins[index]
+    index += 1
+
+  return change_list
+
+print change([25, 10, 5, 1], 42)
+print change([25, 5, 1], 42)
+print change([25, 10, 1], 42)
 
 
-
-
-
-# print "current stack"
-# current = myStack.head
-# for x in range(0, myStack.size):
-#   print current.data
-#   current = current.next
-
-# print "popping"
-# print myStack.pop()
-
-# print "current stack"
-# current = myStack.head
-# for x in range(0, myStack.size):
-#   print current.data
-#   current = current.next
-
-# print "popping"
-# print myStack.pop()
-
-# print "current stack"
-# current = myStack.head
-# for x in range(0, myStack.size):
-#   print current.data
-#   current = current.next
-
-# print "peeking"
-# print myStack.peek()
 
