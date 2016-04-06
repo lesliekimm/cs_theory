@@ -130,11 +130,35 @@ def change(coins, amount):
 
   return change_list
 
-print change([25, 10, 5, 1], 42)
-print change([25, 5, 1], 42)
-print change([25, 10, 1], 42)
-print change([10, 1, 25, 5], 42)
+def change_test():
+  print change([25, 10, 5, 1], 42)
+  print change([25, 5, 1], 42)
+  print change([25, 10, 1], 42)
+  print change([10, 1, 25, 5], 42)
 
+print "change without recursion"
+change_test()
 
+# do it recursively
+def change_recursive(coins, amount):
+  coins.sort()
+  coins.reverse()
+  change_list = []
 
+  index = 0
+  if amount >= coins[index]:
+    amount -= coins[index]
+    returned_list = change_recursive(coins, amount)
+    for x in range(0, len(returned_list)):
+      change_list.append(returned_list[x])
+
+  return change_list
+
+print "change with recursion"
+change_test()
+
+# recursion didn't make it shorter or easier. is runtime of recursion
+# O(n^2)?
+# and for without recursion, the outer while loop is n, but how do i
+# calculate the inner loop?
 
