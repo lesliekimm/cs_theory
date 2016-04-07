@@ -46,6 +46,8 @@ class Stack:
   # the original question said to mutate the existing stack. is this
   # something different?
   def fix_stack(self):
+    # in class, realized i didn't do it exaclty as problem described
+    # TODO: need to conceptually pop off items to fix the bottom two
     if self.size == 0:
       raise Exception("Empty stack, nothing to fix.")
     if self.size == 1:
@@ -159,6 +161,16 @@ def change_recursive(coins, amount):
       change_list.append(returned_list[x])
 
   return change_list
+
+# class notes
+# recursion:
+# def make_change(coins, amount):
+#   max_coin = coins[-1]
+#   if max_coin < amount:
+#     put max_coin in result
+#     return make_change(coins, amount - max_coin)
+#   else:
+#     return make_change(coins[:-1], amount)
 
 # print "change with recursion"
 # change_test()
