@@ -36,3 +36,13 @@ function containAllRots(strng, arr) {
    
    return true
 }
+
+function test_contains_all_rots() {
+  console.log(containAllRots("abcde", ["abcde", "bcdea", "cdeab", "deabc", "eabcd"]))
+  console.log(containAllRots("", []))
+  console.log(containAllRots("", ["bsjq", "qbsj"]))
+  console.log(containAllRots("bsjq", ["bsjq", "qbsj", "sjqb", "twZNsslC", "jqbs"]))
+  console.log(containAllRots("XjYABhR", ["TzYxlgfnhf", "yqVAuoLjMLy", "BhRXjYA", "YABhRXj", "hRXjYAB", "jYABhRX", "XjYABhR", "ABhRXjY"]))
+}
+
+test_contains_all_rots()
