@@ -17,7 +17,7 @@ function getWords(hash) {
 
   for (var key in hash) {
     for (var i in hash[key]) {
-      all_letters += (hash[key][i].repeat(key));
+      all_letters += Array(parseInt(key)+1).join(hash[key][i])
     }    
   }
 
@@ -25,14 +25,26 @@ function getWords(hash) {
 }
 
 function permutations(string) {
-  if (string.length == 1) {
+  if (string.length == 0) {
     return [string]
   }
   else {
-    // permute
+    prev_s = permutations(string.slice(1, string.length))
+    res_s = []
+    for (var i = 0; i < prev_s.length; i++) {
+      for (var j = 0; j < string.length; j++) {
+        new_s = prev_s[i].slice(0, j) + string.charAt(0) + prev_s[i].slice(j, string.length - 1)
+        if (res_s.indexOf(new_s) < 0) {
+          res_s.push(new_s)
+        }
+      }
+    }
   }
+  res_s.sort()
+  return res_s
 }
 
+// Kata tests fail bc it times out
 function test_getWords() {
   // ["abc", "acb", "bac", "bca", "cab", "cba"]
   console.log(getWords({1:["a", "b", "c"]}));
