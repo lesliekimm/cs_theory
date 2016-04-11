@@ -71,3 +71,25 @@ def test_check_perm():
   print check_permutation("code", "dope")
 
 # test_check_perm()
+
+# 1.3 - Write a method to replace all spaces in a string with '%20'
+def urlify(strng):
+  strng_arr = strng.split(" ")
+  strng_arr = strng_arr[:-1]
+  res = ""
+  for string in strng_arr:
+    res += string + "%20"
+  return res
+
+def test_urlify():
+  print urlify(" Hello World")
+  print urlify("NoSpacesHere")
+  print urlify("FindTheSpaceAtTheEnd ")
+  print urlify("This is a normal sentence with spaces.")
+  print urlify("This has [] punctuation; in the middle")
+
+test_urlify()
+
+
+
+
