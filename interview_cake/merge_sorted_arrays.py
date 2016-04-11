@@ -39,21 +39,59 @@ def merge_lists(list1, list2):
 
   return merged
 
-
 my_list = [3, 4, 6, 10, 11, 15]
 alices_list = [1, 5, 8, 12, 14, 19]
 # prints [1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 19]
 # print merge_lists(my_list, alices_list)
+# print merge_lists([], [1, 3, 6, 10, 12])
+# print merge_lists([], [])
 
-def merge_lists_constant_space(list1, list2):
+def merge_lists_2(list1, list2):
+  if len(list1) == 0:
+    return list2
+  if len(list2) == 0:
+    return list1
+
   merged = list1
 
+  for item in list2:
+    index = 0
+    
+    while index < len(list1):
+      if item > list1[index]:
+        index += 1
+      else:
+        merged.insert(index, item)
+        break
+
+    if index == len(list1):
+      merged.insert(index, item)
 
   return merged
 
-
-
-my_list = [3, 4, 6, 10, 11, 15]
-alices_list = [1, 5, 8, 12, 14, 19]
 # prints [1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 19]
-print merge_lists_constant_space(my_list, alices_list)
+# print merge_lists_2(my_list, alices_list)
+# print merge_lists_2([], [1, 3, 6, 10, 12])
+# print merge_lists_2([], [])
+
+# use bubble sort - move each item as far right as possible
+def merge_lists_after_concat(list1, list2):
+  merged = list1 + list2
+
+  for i in range(len(merged)):
+    for j in range(len(merged)-1-i):
+      if merged[j] > merged[j+1]:
+        temp1 = merged[j]
+        temp2 = merged[j+1]
+        merged[j] = temp2
+        merged[j+1] = temp1
+
+  return merged
+
+# prints [1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 19]
+print merge_lists_after_concat(my_list, alices_list)
+print merge_lists_after_concat([], [1, 3, 6, 10, 12])
+print merge_lists_after_concat([], [])  
+
+
+
