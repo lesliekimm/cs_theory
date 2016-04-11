@@ -51,8 +51,6 @@ def check_permutation(str1, str2):
   return False
 
 def perm(strng):
-  res = []
-
   if len(strng) == 0:
     return [""]
   else:
