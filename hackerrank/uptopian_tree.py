@@ -28,16 +28,15 @@ for a0 in xrange(t):
   if n % 2 == 0:
     while n > 0:
       height *= 2
-      heigh += 1
+      height += 1
       n -= 2
   elif n == 1:
     height *= 2
   else:
     while n > 1:
       height *= 2
-      heigh += 1
+      height += 1
       n -= 2
-    height += 2
+    height *= 2
   print height
-
 
