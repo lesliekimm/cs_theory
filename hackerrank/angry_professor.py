@@ -27,10 +27,10 @@
 # canceled or NO if it is not.
 
 # Constraints
-# 1≤T≤10
-# 1≤N≤1000
-# 1≤K≤N
-# −100≤ai≤100,where i∈[1,N]−100≤ai≤100,where i∈[1,N]
+# 1 ≤ T ≤ 10
+# 1 ≤ N ≤ 1000
+# 1 ≤ K ≤ N
+# −100 ≤ ai ≤ 100, where i∈[1,N]
 
 # Note 
 # If a student arrives exactly on time (ai=0)(ai=0),

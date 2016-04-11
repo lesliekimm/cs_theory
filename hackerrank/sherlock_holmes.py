@@ -16,8 +16,8 @@
 # fast. Your task is to help Sherlock find the key before The Beast is destroyed!
 
 # Constraints
-# 1≤T≤20
-# 1≤N≤100000
+# 1 ≤ T ≤ 20
+# 1 ≤ N ≤ 100000
 
 # Input Format
 # The first line is an integer, T, denoting the number of test cases.
