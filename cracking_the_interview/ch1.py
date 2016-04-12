@@ -195,9 +195,42 @@ def test_one_away():
   print one_away("dog", "Dog")      # True
   print one_away("creAm", "cram")   # True
 
-test_one_away()
+# test_one_away()
 
+# 1.6 - Compress a given string to it's char followed by the char count.
+# i.e. 'aabbbcddaaaa' would return 'a2b3c1d2a4'
+# If compressed string is longer than original string, return original string.
+def string_compression(strng):
+  if strng == "":
+    raise Exception("Empty string")
 
+  index = 0
+  new_s = ""
+  curr = strng[index]
+  curr_count = 0
+  while index < len(strng):
+    if strng[index] == curr:
+      curr_count += 1
+    else:
+      new_s = new_s + curr + str(curr_count)
+      curr = strng[index]
+      curr_count = 1
+    index += 1
+  new_s = new_s + curr + str(curr_count)
+
+  if len(new_s) > len(strng):
+    new_s = strng
+
+  return new_s
+
+def test_string_compression():
+  # print string_compression("")                # raise error
+  print string_compression("aabbbcddaaaa")    # 'a2b3c1d2a4'
+  print string_compression("abc")             # return original
+  print string_compression("aa")              # return 'a2'
+  print string_compression("a")               # return original
+
+test_string_compression()
 
 
 
