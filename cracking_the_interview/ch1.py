@@ -98,9 +98,8 @@ def is_palindrome(strng):
   strng = strng.lower()
   odd_str = len(strng) % 2      # 1 means odd number of char
 
-  rx = re.compile('[^a-z][0-9]')
+  rx = re.compile('[^\w]')
   strng = rx.sub('', strng)
-  print strng
 
   if len(strng) == 0:
     raise Exception("Empty string")
@@ -114,26 +113,32 @@ def is_palindrome(strng):
   return True
 
 def palindrome_permutation(strng):
+  permutations = perm(strng)
+
+  for p in permutations:
+    if is_palindrome(p):
+      return True
   return False
 
 def test_is_palindrome():
-  # print is_palindrome("Hanah")                            # True
-  # print is_palindrome("Sara")                             # False
+  print is_palindrome("Hanah")                            # True
+  print is_palindrome("Sara")                             # False
   print is_palindrome("A dog, a plan, a canal: pagoda.")  # True
-  # print is_palindrome("")                                 # Exception
-  # print is_palindrome("a")                                # True
-  # print is_palindrome("ab")                               # False
-  # print is_palindrome("aa")                               # True
-  # print is_palindrome("Otto sees Otto.")                  # True
-  print is_palindrome("Otto 3.sees Otto.")                 # True
+  # print is_palslindrome("")                                 # Exception
+  print is_palindrome("a")                                # True
+  print is_palindrome("ab")                               # False
+  print is_palindrome("aa")                               # True
+  print is_palindrome("Otto sees Otto.")                  # True
+  print is_palindrome("Otto 3.sees Otto.")                # False
 
 
 def test_palindrome_permutation():
-  print palindrome_permutation("Tact Coa")  # True
-  print palindrome_permutation("booger")    # False
-  print palindrome_permutation("bear ear")  # True
-  print palindrome_permutation("")          # False
+  print palindrome_permutation("Tact Coa")                          # True
+  print palindrome_permutation("booger")                            # False
+  print palindrome_permutation("bear ear")                          # True
+  # print palindrome_permutation("")                                 # False
+  print palindrome_permutation("Sara")                              # False
 
-test_is_palindrome()
-# test_palindrome_permutation()
+# test_is_palindrome()
+test_palindrome_permutation()
 
