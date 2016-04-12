@@ -230,7 +230,33 @@ def test_string_compression():
   print string_compression("aa")              # return 'a2'
   print string_compression("a")               # return original
 
-test_string_compression()
+# test_string_compression()
+
+# 1.7 - Given an image represented by an NxN matrix, where each pixel in img
+# is 4 bytes, write a method to roate the image by 90 degrees.
+# Bonus: Do it in place
+def rotate_matrix(mtx):
+  return mtx
+
+def test_rotate_matrix():
+  mtx = []
+  mtx1 = [ [1] ]              # base case - recursion???
+  mtx2 = [ [1, 2],
+           [3, 4] ]
+  mtx3 = [ [1, 2, 3],
+           [8, 9, 4],
+           [7, 6, 5] ]
+  mtx4 = [ [1,   2,  3, 4],
+           [12, 13, 14, 5],
+           [11, 16, 15, 6],
+           [10,  9,  8, 7] ]   
+  print rotate_matrix(mtx)
+  print rotate_matrix(mtx1)
+  print rotate_matrix(mtx2)
+  print rotate_matrix(mtx3)
+  print rotate_matrix(mtx4)
+
+test_rotate_matrix()
 
 
 
