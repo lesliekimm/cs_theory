@@ -131,7 +131,6 @@ def test_is_palindrome():
   print is_palindrome("Otto sees Otto.")                  # True
   print is_palindrome("Otto 3.sees Otto.")                # False
 
-
 def test_palindrome_permutation():
   print palindrome_permutation("Tact Coa")                          # True
   print palindrome_permutation("booger")                            # False
@@ -140,5 +139,67 @@ def test_palindrome_permutation():
   print palindrome_permutation("Sara")                              # False
 
 # test_is_palindrome()
-test_palindrome_permutation()
+# test_palindrome_permutation()
+
+# 1.5 - Given two strings, determine if they are one edit (or zero) edit
+# away form matching. Edits are add char, remove char or replace char
+def one_away(str1, str2):
+  index1 = 0
+  index2 = 0
+  num_edits = 0
+
+  str1 = str1.lower()
+  str2 = str2.lower()
+
+  if str1 == str2:    # both empty strings or equal strings
+    return True
+  elif abs(len(str1) - len(str2)) == 1:
+    return True
+  else:
+    while index1 < len(str1) and index2 < len(str2):
+      if index1 == len(str1) - 1 and index2 == len(str2) - 1:
+        if str1[index1] != str2[index2]:
+          index1 += 1
+          index2 += 1
+          num_edits += 1
+      elif str1[index1] == str2[index2]:
+        if index1 == len(str1) - 1 and index2 == len(str2) - 1:   # zero edits
+          return True
+        index1 += 1
+        index2 += 1
+      elif str1[index1 + 1:] == str2[index2 + 1:]:                # replace edit
+        return True
+      elif str1[index1 + 1] == str2[index2 + 1]:
+        index1 += 1
+        index2 += 1
+        num_edits += 1
+      elif str1[index1 + 1] == str2[index2]:
+        index1 += 1
+        num_edits += 1
+      elif str1[index1] == str2[index2 + 1]:
+        index2 += 1
+        num_edits += 1
+    else:
+      return False
+
+  if num_edits > 1:
+    return True
+  return False
+
+def test_one_away():
+  print one_away("", "a")           # True
+  print one_away("", "")            # True
+  print one_away("", "ab")          # False
+  print one_away("bake", "cake")    # True
+  print one_away("bale", "fall")    # False
+  print one_away("dog", "Dog")      # True
+  print one_away("creAm", "cram")   # True
+
+test_one_away()
+
+
+
+
+
+
 
