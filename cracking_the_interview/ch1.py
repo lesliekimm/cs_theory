@@ -1,7 +1,8 @@
 import re
 import pytest
 
-# 1.1 - Determine if a string has all unique characters
+# 1.1 - determine if a string has all unique characters
+# use dictionary to store chars as keys
 def is_unique(strng):
   chars = {}
   for c in strng:
@@ -11,16 +12,17 @@ def is_unique(strng):
       chars[c] = 1
   return True
 
-def is_unique_set(string):
+# use set to store chars because we don't need key, value pairs
+def is_unique_set(strng):
   chars = set()
-  for c in string:
+  for c in strng:
     if c in chars:
       return False
     else:
       chars.add(c)
   return True
 
-# 1.1 - Without using another data structure
+# without using another data structure - brute force method
 def is_unique_brute_force(strng):
   for i1 in range(len(strng)):
     for i2 in range(i1+1, len(strng)):
@@ -28,12 +30,14 @@ def is_unique_brute_force(strng):
         return False
   return True
 
-# insertion, bubble, selection - n^2 running time
-# merge(recursive), quick sort(recursive), heap sort - n log n
+# different types of sorts
+# insertion, bubble, selection - n^2 runtime
+# merge(recursive), quick sort(recursive), heap sort - nlog(n) runtime
 
+# sort char in strng first to compare one value and the next
 def is_unique_sort(strng):
   # strng.sort()                # mutative - will change var outside function
-  str2 = sorted(strng)        # nonmutative
+  str2 = sorted(strng)        # nonmutative - requires 2n space bc str2 is copy
   for index in range(len(str2) - 1):
     if str2[index] == str2[index + 1]:
       return False
@@ -41,14 +45,14 @@ def is_unique_sort(strng):
 
 # abstracted test
 def _test_is_unique(is_unique_function):
-  assert is_unique_function("try")
-  assert not is_unique_function("call")
-  assert is_unique_function("beauty")
-  assert is_unique_function("computer")
-  assert not is_unique_function("free")
-  assert is_unique_function("")
+  assert is_unique_function("try")          # True
+  assert not is_unique_function("call")     # False
+  assert is_unique_function("beauty")       # True
+  assert is_unique_function("computer")     # True
+  assert not is_unique_function("free")     # False
+  assert is_unique_function("")             # True
 
-# passing test into abstracted test
+# passing function into abstracted test
 def test_is_unique():
   _test_is_unique(is_unique)
 
@@ -65,7 +69,7 @@ def test_is_unique_sort():
 
 
 
-# 1.2 - Given two strings, decide if one is a permutation of the other
+# 1.2 - given two strings, decide if one is a permutation of the other
 def check_permutation(str1, str2):
   if str1 == "" and str2 == "":
     return True
@@ -80,27 +84,36 @@ def check_permutation(str1, str2):
 
   return False
 
+# original function
+def perm(strng):
+  if len(strng) == 0:
+    return [""]
+  else:
+    prev_s = perm(strng[1:])              # recursive call generates (n-1)! strings
+    res_s = []                            # list will grow to have n! strings
+    for i in range(0, len(prev_s)):       # (n-1)! iterations
+      for j in range (0, len(strng)):     # n iterations
+        new_s = prev_s[i][0:j] + strng[0] + prev_s[i][j:len(strng) - 1] # 2n runtime
+        if new_s not in res_s:            # 'in' takes up to n! runtime for linear search
+          res_s.append(new_s)             # constant time
+  return res_s                            # overall runtime: (n-1)! * n * [2n + n!] ==> O((n!)^2) OMG
+
+# function worked out with alan improves runtime by n! by using set for search
+# instead of appendng strings to a new list
 def all_permutations(strng):
   if len(strng) == 0:
     return [""]
   else:
     first_char = strng[0]
     prev_s = all_permutations(strng[1:])  # recursive call generates (n-1)! strings
-    # res_s = []
-    res_s = set()  # list will grow to eventually have n! strings
-    # for i in range(0, len(prev_s)):  # (n-1)! iterations
-    #   substr_perm = prev_s[i]
-    for substr_perm in prev_s:  # (n-1)! iterations
-      for j in range(0, len(strng)):  # n iterations
+    res_s = set()                         # list will grow to eventually have n! strings
+    for substr_perm in prev_s:            # (n-1)! iterations
+      for j in range(0, len(strng)):      # n iterations
         # put first character into every possible position in the substring permutation
-        # new_s = prev_s[i][0:j] + strng[0] + prev_s[i][j:len(strng) - 1]
         new_s = substr_perm[:j] + first_char + substr_perm[j:]  # 2*n running time
-        # if new_s not in res_s:  # 'in' takes up to n! running time to linear search
-        #   res_s.append(new_s)   # constant time
-        if new_s not in res_s:  # 'in' takes constant time to check set membership
-          res_s.add(new_s)
-    # overall running time:  (n-1)! * n * [2*n + n!]    ==>   O((n!)^2)    OMG
-  return res_s  # n! strings
+        if new_s not in res_s:            # 'in' takes constant time to check set membership
+          res_s.add(new_s)                # constant time
+  return res_s                            # overall runtime: n!
 
 # all_permutations("fun") => ["fun", "fnu", "ufn", "unf", "nfu", "nuf"]
 
@@ -112,40 +125,40 @@ def all_permutations(strng):
 # j = 0: new_s = "" + "f" + "un"
 # j = 1: new_s = "u" + "f" + "n"
 
-# strng[0:-1] => "fu"
-# prev_s[i] => "un"
-# j = 1
-# "un"[0:j] + "un"[j:2 - 1] => "u" + "n"
-
 def test_check_perm():
-  print check_permutation("thump", "humpt")
-  print check_permutation("book", "okbo")
-  print check_permutation("", "okbo")
-  print check_permutation("", "")
-  print check_permutation("code", "dope")
+  assert check_permutation("thump", "humpt")    # True
+  assert check_permutation("book", "okbo")      # True
+  assert not check_permutation("", "okbo")      # False
+  assert check_permutation("", "")              # True
+  assert not check_permutation("code", "dope")  # False
 
-# test_check_perm()
 
-# 1.3 - Write a method to replace all spaces in a string with '%20'
+
+
+
+# 1.3 - write a method to replace all spaces in a string with '%20'
 def urlify(strng):
   strng_arr = strng.split(" ")
-  strng_arr = strng_arr[:-1]
+  strng_arr2 = strng_arr[:-1]
   res = ""
-  for string in strng_arr:
+  for string in strng_arr2:
     res += string + "%20"
+  res += strng_arr[-1]
   return res
 
 def test_urlify():
-  print urlify(" Hello World")
-  print urlify("NoSpacesHere")
-  print urlify("FindTheSpaceAtTheEnd ")
-  print urlify("This is a normal sentence with spaces.")
-  print urlify("This has [] punctuation; in the middle")
+  assert urlify(" Hello World") == "%20Hello%20World"
+  assert urlify("NoSpacesHere") == "NoSpacesHere"
+  assert urlify("FindTheSpaceAtTheEnd ") == "FindTheSpaceAtTheEnd%20"
+  assert urlify("This is a normal sentence with spaces.") == "This%20is%20a%20normal%20sentence%20with%20spaces."
+  assert urlify("This has [] punctuation; in the middle") == "This%20has%20[]%20punctuation;%20in%20the%20middle"
 
-# test_urlify()
 
-# 1.4 - Given a string, check if it is a permutation of a palindrome.
-# Palindrome is a word or phrase that is the same forward & backwards.
+
+
+
+# 1.4 - given a string, check if it is a permutation of a palindrome
+# palindrome is a word or phrase that is the same forward & backwards
 def is_palindrome(strng):
   strng = strng.lower()
   odd_str = len(strng) % 2      # 1 means odd number of char
@@ -173,28 +186,30 @@ def palindrome_permutation(strng):
   return False
 
 def test_is_palindrome():
-  print is_palindrome("Hanah")                            # True
-  print is_palindrome("Sara")                             # False
-  print is_palindrome("A dog, a plan, a canal: pagoda.")  # True
+  assert is_palindrome("Hanah")                            # True
+  assert not is_palindrome("Sara")                         # False
+  assert is_palindrome("A dog, a plan, a canal: pagoda.")  # True
   # print is_palslindrome("")                                 # Exception
-  print is_palindrome("a")                                # True
-  print is_palindrome("ab")                               # False
-  print is_palindrome("aa")                               # True
-  print is_palindrome("Otto sees Otto.")                  # True
-  print is_palindrome("Otto 3.sees Otto.")                # False
+  assert is_palindrome("a")                                # True
+  assert not is_palindrome("ab")                           # False
+  assert is_palindrome("aa")                               # True
+  assert is_palindrome("Otto sees Otto.")                  # True
+  assert not is_palindrome("Otto 3.sees Otto.")            # False
 
 def test_palindrome_permutation():
-  print palindrome_permutation("Tact Coa")                          # True
-  print palindrome_permutation("booger")                            # False
-  print palindrome_permutation("bear ear")                          # True
-  # print palindrome_permutation("")                                 # False
-  print palindrome_permutation("Sara")                              # False
+  assert palindrome_permutation("Tact Coa")                # True
+  assert not palindrome_permutation("booger")              # False
+  assert palindrome_permutation("bear ear")                # True
+  # print palindrome_permutation("")                       # False
+  assert not palindrome_permutation("Sara")                # False
 
-# test_is_palindrome()
-# test_palindrome_permutation()
 
-# 1.5 - Given two strings, determine if they are one edit (or zero) edit
-# away form matching. Edits are add char, remove char or replace char
+
+
+
+# 1.5 - given two strings, determine if they are one edit (or zero) edit
+# away from matching
+# edits are add char, remove char or replace char
 def one_away(str1, str2):
   index1 = 0
   index2 = 0
@@ -239,19 +254,21 @@ def one_away(str1, str2):
   return False
 
 def test_one_away():
-  print one_away("", "a")           # True
-  print one_away("", "")            # True
-  print one_away("", "ab")          # False
-  print one_away("bake", "cake")    # True
-  print one_away("bale", "fall")    # False
-  print one_away("dog", "Dog")      # True
-  print one_away("creAm", "cram")   # True
+  assert one_away("", "a")              # True
+  assert one_away("", "")               # True
+  assert not one_away("", "ab")         # False
+  assert one_away("bake", "cake")       # True
+  assert not one_away("bale", "fall")   # False
+  assert one_away("dog", "Dog")         # True
+  assert one_away("creAm", "cram")      # True
 
-# test_one_away()
 
-# 1.6 - Compress a given string to it's char followed by the char count.
+
+
+
+# 1.6 - compress a given string to it's char followed by the char count
 # i.e. 'aabbbcddaaaa' would return 'a2b3c1d2a4'
-# If compressed string is longer than original string, return original string.
+# if compressed string is longer than original string, return original string
 def string_compression(strng):
   if strng == "":
     raise Exception("Empty string")
@@ -277,16 +294,18 @@ def string_compression(strng):
 
 def test_string_compression():
   # print string_compression("")                # raise error
-  print string_compression("aabbbcddaaaa")    # 'a2b3c1d2a4'
-  print string_compression("abc")             # return original
-  print string_compression("aa")              # return 'a2'
-  print string_compression("a")               # return original
+  assert string_compression("aabbbcddaaaa") == "a2b3c1d2a4"
+  assert string_compression("abc") == "abc"
+  assert string_compression("aa") == "a2"
+  assert string_compression("a") == "a"
 
-# test_string_compression()
 
-# 1.7 - Given an image represented by an NxN matrix, where each pixel in img
+
+
+
+# 1.7 - given an image represented by an NxN matrix, where each pixel in img
 # is 4 bytes, write a method to rotate the image by 90 degrees.
-# Bonus: Do it in place
+# bonus: do it in place
 def rotate_matrix(mtx):
   n = len(mtx)
   
