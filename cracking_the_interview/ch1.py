@@ -1,4 +1,5 @@
 import re
+import pytest
 
 # 1.1 - Determine if a string has all unique characters
 def is_unique(strng):
@@ -10,60 +11,111 @@ def is_unique(strng):
       chars[c] = 1
   return True
 
-def test_is_unique():
-  print is_unique("try")
-  print is_unique("call")
-  print is_unique("beauty")
-  print is_unique("computer")
-  print is_unique("free")
-  print is_unique("")
-
-# test_is_unique()
+def is_unique_set(string):
+  chars = set()
+  for c in string:
+    if c in chars:
+      return False
+    else:
+      chars.add(c)
+  return True
 
 # 1.1 - Without using another data structure
-def is_unique_wo_other_data_structure(strng):
+def is_unique_brute_force(strng):
   for i1 in range(len(strng)):
     for i2 in range(i1+1, len(strng)):
       if strng[i1] == strng[i2]:
         return False
   return True
 
-def test_is_unique_wo_other_data_structure():
-  print is_unique_wo_other_data_structure("try")
-  print is_unique_wo_other_data_structure("call")
-  print is_unique_wo_other_data_structure("beauty")
-  print is_unique_wo_other_data_structure("computer")
-  print is_unique_wo_other_data_structure("free")
-  print is_unique_wo_other_data_structure("")
+# insertion, bubble, selection - n^2 running time
+# merge(recursive), quick sort(recursive), heap sort - n log n
 
-# test_is_unique_wo_other_data_structure()
+def is_unique_sort(strng):
+  # strng.sort()                # mutative - will change var outside function
+  str2 = sorted(strng)        # nonmutative
+  for index in range(len(str2) - 1):
+    if str2[index] == str2[index + 1]:
+      return False
+  return True
+
+# abstracted test
+def _test_is_unique(is_unique_function):
+  assert is_unique_function("try")
+  assert not is_unique_function("call")
+  assert is_unique_function("beauty")
+  assert is_unique_function("computer")
+  assert not is_unique_function("free")
+  assert is_unique_function("")
+
+# passing test into abstracted test
+def test_is_unique():
+  _test_is_unique(is_unique)
+
+def test_is_unique_set():
+  _test_is_unique(is_unique_set)
+
+def test_is_unique_brute_force(): 
+  _test_is_unique(is_unique_brute_force)
+
+def test_is_unique_sort():
+  _test_is_unique(is_unique_sort)
+
+
+
+
 
 # 1.2 - Given two strings, decide if one is a permutation of the other
 def check_permutation(str1, str2):
   if str1 == "" and str2 == "":
     return True
-  if (str1 == "" and str2 != "") or (str1 !="" and str2 == ""):
+  # if (str1 == "" and str2 != "") or (str1 !="" and str2 == ""):
+  if len(str1) != len(str2):
     return False
 
-  all_perms = perm(str1)
+  all_perms = all_permutations(str1)
 
   if str2 in all_perms:
     return True
 
   return False
 
-def perm(strng):
+def all_permutations(strng):
   if len(strng) == 0:
     return [""]
   else:
-    prev_s = perm(strng[1:])
-    res_s = []
-    for i in range(0, len(prev_s)):
-      for j in range (0, len(strng)):
-        new_s = prev_s[i][0:j] + strng[0] + prev_s[i][j:len(strng) - 1]
-        if new_s not in res_s:
-          res_s.append(new_s)
-  return res_s
+    first_char = strng[0]
+    prev_s = all_permutations(strng[1:])  # recursive call generates (n-1)! strings
+    # res_s = []
+    res_s = set()  # list will grow to eventually have n! strings
+    # for i in range(0, len(prev_s)):  # (n-1)! iterations
+    #   substr_perm = prev_s[i]
+    for substr_perm in prev_s:  # (n-1)! iterations
+      for j in range(0, len(strng)):  # n iterations
+        # put first character into every possible position in the substring permutation
+        # new_s = prev_s[i][0:j] + strng[0] + prev_s[i][j:len(strng) - 1]
+        new_s = substr_perm[:j] + first_char + substr_perm[j:]  # 2*n running time
+        # if new_s not in res_s:  # 'in' takes up to n! running time to linear search
+        #   res_s.append(new_s)   # constant time
+        if new_s not in res_s:  # 'in' takes constant time to check set membership
+          res_s.add(new_s)
+    # overall running time:  (n-1)! * n * [2*n + n!]    ==>   O((n!)^2)    OMG
+  return res_s  # n! strings
+
+# all_permutations("fun") => ["fun", "fnu", "ufn", "unf", "nfu", "nuf"]
+
+# strng = "fun"
+# prev_s = all_permutations("un") => ["un", "nu"]
+# res_s = []
+# i in [0, 1]
+# j in [0, 1, 2]
+# j = 0: new_s = "" + "f" + "un"
+# j = 1: new_s = "u" + "f" + "n"
+
+# strng[0:-1] => "fu"
+# prev_s[i] => "un"
+# j = 1
+# "un"[0:j] + "un"[j:2 - 1] => "u" + "n"
 
 def test_check_perm():
   print check_permutation("thump", "humpt")
@@ -113,7 +165,7 @@ def is_palindrome(strng):
   return True
 
 def palindrome_permutation(strng):
-  permutations = perm(strng)
+  permutations = all_permutations(strng)
 
   for p in permutations:
     if is_palindrome(p):
@@ -233,14 +285,25 @@ def test_string_compression():
 # test_string_compression()
 
 # 1.7 - Given an image represented by an NxN matrix, where each pixel in img
-# is 4 bytes, write a method to roate the image by 90 degrees.
+# is 4 bytes, write a method to rotate the image by 90 degrees.
 # Bonus: Do it in place
 def rotate_matrix(mtx):
+  n = len(mtx)
+  
+  for item in mtx:
+    if len(item) != n:
+      raise ValueError("Matrix must be NxN size")
+
+  if n == 0:
+    return mtx
+  else:
+    print "recursion here"
+
   return mtx
 
 def test_rotate_matrix():
-  mtx = []
-  mtx1 = [ [1] ]              # base case - recursion???
+  mtx = []                    # base case - recursion???
+  mtx1 = [ [1] ]
   mtx2 = [ [1, 2],
            [3, 4] ]
   mtx3 = [ [1, 2, 3],
@@ -249,15 +312,19 @@ def test_rotate_matrix():
   mtx4 = [ [1,   2,  3, 4],
            [12, 13, 14, 5],
            [11, 16, 15, 6],
-           [10,  9,  8, 7] ]   
+           [10,  9,  8, 7] ]
+  mtx_error = [ [1], [2] ]
   print rotate_matrix(mtx)
   print rotate_matrix(mtx1)
   print rotate_matrix(mtx2)
   print rotate_matrix(mtx3)
   print rotate_matrix(mtx4)
+  # print rotate_matrix(mtx_error)      # raise error
 
 test_rotate_matrix()
 
+if __name__ == "__main__":
+  pytest.main()
 
 
 
