@@ -66,3 +66,37 @@
 # _ _ 1 2 1 1 _ _         1               4
 # _ _ _ 1 _ _ _ _         1               1
 # _ _ _ _ _ _ _ _       DONE            DONE
+
+import sys
+
+def cut_the_sticks(arr):
+  if len(arr) == 1:
+    print 1
+  else:
+    print len(arr)
+    min_val = arr[0]
+    
+    index = 1
+    
+    while index < len(arr):
+      if arr[index] < min_val:
+        min_val = arr[index]
+      index += 1
+
+    new_arr = []
+    for j in range(len(arr)):
+      insert_val = arr[j] - min_val
+      if insert_val != 0:
+        new_arr.append(insert_val)
+    cut_the_sticks(new_arr)
+
+n = int(raw_input().strip())
+arr = map(int,raw_input().strip().split(' '))
+
+cut_the_sticks(arr)
+
+
+
+
+
+
