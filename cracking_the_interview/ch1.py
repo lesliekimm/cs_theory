@@ -396,6 +396,18 @@ def test_zero_matrix():
 
 
 
+# 1.9 - Assume you have isSubsring method which checks if one word is a substring
+# of another. Given 2 strings, s1 and s2, write code to check if s2 is a rotation
+# of s1 using only one call to isSubstring.
+# (i.e. "waterbottle" is a rotation of "erbottlewat")
+def is_substring(str1, str2):
+  return True
+
+def string_rotation(str1, str2):
+  return
+
+
+
 
 
 
