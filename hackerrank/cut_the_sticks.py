@@ -70,18 +70,13 @@
 import sys
 
 def cut_the_sticks(arr):
+  if len(arr) == 0:
+    return
   if len(arr) == 1:
     print 1
   else:
     print len(arr)
-    min_val = arr[0]
-    
-    index = 1
-    
-    while index < len(arr):
-      if arr[index] < min_val:
-        min_val = arr[index]
-      index += 1
+    min_val = min(arr)
 
     new_arr = []
     for j in range(len(arr)):
