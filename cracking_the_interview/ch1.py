@@ -189,7 +189,8 @@ def test_is_palindrome():
   assert is_palindrome("Hanah")                            # True
   assert not is_palindrome("Sara")                         # False
   assert is_palindrome("A dog, a plan, a canal: pagoda.")  # True
-  # print is_palslindrome("")                                 # Exception
+  with pytest.raises(Exception):
+    is_palslindrome("")                                    # raises Exception
   assert is_palindrome("a")                                # True
   assert not is_palindrome("ab")                           # False
   assert is_palindrome("aa")                               # True
@@ -200,7 +201,8 @@ def test_palindrome_permutation():
   assert palindrome_permutation("Tact Coa")                # True
   assert not palindrome_permutation("booger")              # False
   assert palindrome_permutation("bear ear")                # True
-  # print palindrome_permutation("")                       # False
+  with pytest.raises(Exception):
+    palindrome_permutation("")                             # raises Exception
   assert not palindrome_permutation("Sara")                # False
 
 
@@ -293,7 +295,8 @@ def string_compression(strng):
   return new_s
 
 def test_string_compression():
-  # print string_compression("")                # raise error
+  with pytest.raises(Exception):
+    string_compression("")            # raise Exception
   assert string_compression("aabbbcddaaaa") == "a2b3c1d2a4"
   assert string_compression("abc") == "abc"
   assert string_compression("aa") == "a2"
@@ -309,38 +312,96 @@ def test_string_compression():
 def rotate_matrix(mtx):
   n = len(mtx)
   
-  for item in mtx:
-    if len(item) != n:
+  for row in mtx:
+    if len(row) != n:
       raise ValueError("Matrix must be NxN size")
 
-  if n == 0:
-    return mtx
-  else:
-    print "recursion here"
+  rotated_mtx = [[0 for row in range(n)] for col in range(n)]
+
+  for row in range(n):
+    for col in range(n):
+      rotated_mtx[row][col] = mtx[(n-1) - col][row]
+
+  return rotated_mtx
+
+def test_rotate_matrix():
+  mtx  = []                         # []
+  mtx1 = [ ['a'] ]                  # [ ['a'] ] 
+  mtx2 = [ ['a', 'b'],              # [ ['c', 'a'],
+           ['c', 'd'] ]             #   ['d', 'b'] ]
+  mtx3 = [ ['a', 'b', 'c'],         # [ ['g', 'd', 'a'],
+           ['d', 'e', 'f'],         #   ['h', 'e', 'b'],
+           ['g', 'h', 'i'] ]        #   ['i', 'f', 'c'] ]
+  mtx4 = [ ['a', 'b', 'c', 'd'],    # [ ['m', 'i', 'e', 'a'],
+           ['e', 'f', 'g', 'h'],    #   ['n', 'j', 'f', 'b'],
+           ['i', 'j', 'k', 'l'],    #   ['o', 'k', 'g', 'c'],
+           ['m', 'n', 'o', 'p'] ]   #   ['p', 'l', 'h', 'd'] ]
+  mtx_error = [ [1], [2] ]
+  assert rotate_matrix(mtx)  == []
+  assert rotate_matrix(mtx1) == [ ['a'] ]
+  assert rotate_matrix(mtx2) == [ ['c', 'a'], ['d', 'b'] ]
+  assert rotate_matrix(mtx3) == [ ['g', 'd', 'a'], ['h', 'e', 'b'], ['i', 'f', 'c'] ]
+  assert rotate_matrix(mtx4) == [ ['m', 'i', 'e', 'a'], ['n', 'j', 'f', 'b'], ['o', 'k', 'g', 'c'], ['p', 'l', 'h', 'd'] ]
+  with pytest.raises(ValueError):
+    rotate_matrix(mtx_error)        # raise ValueError
+
+
+
+
+
+# 1.8 - Write an algorithm such that if an element in an MxN matrix is 0, its
+# entire row and column are set to 0
+def zero_matrix(mtx):
+  rows = []
+  cols = []
+
+  for row in mtx:
+    indices = [col for col, x in enumerate(row) if x == 0]
+    if len(indices) > 0:
+      rows.append(mtx.index(row))
+
+    for c in range(len(indices)):
+      cols.append(indices[c])
+
+  for r in range(len(rows)):
+    for col in range(len(mtx[r])):
+      mtx[rows[r]][col] = 0
+
+  for c in range(len(cols)):
+    for row in range(len(mtx)):
+      mtx[row][cols[c]] = 0
 
   return mtx
 
-def test_rotate_matrix():
-  mtx = []                    # base case - recursion???
-  mtx1 = [ [1] ]
-  mtx2 = [ [1, 2],
-           [3, 4] ]
-  mtx3 = [ [1, 2, 3],
-           [8, 9, 4],
-           [7, 6, 5] ]
-  mtx4 = [ [1,   2,  3, 4],
-           [12, 13, 14, 5],
-           [11, 16, 15, 6],
-           [10,  9,  8, 7] ]
-  mtx_error = [ [1], [2] ]
-  print rotate_matrix(mtx)
-  print rotate_matrix(mtx1)
-  print rotate_matrix(mtx2)
-  print rotate_matrix(mtx3)
-  print rotate_matrix(mtx4)
-  # print rotate_matrix(mtx_error)      # raise error
+def test_zero_matrix():
+  mtx  = []                         # []
+  mtx1 = [ [0, 5] ]                 # [ [0, 0] ] 
+  mtx2 = [ [1, 3, 1],               # [ [0, 3, 1],
+           [0, 2, 8],               #   [0, 0, 0],
+           [0, 1, 4],               #   [0, 0, 0],
+           [4, 8, 9], ]             #   [0, 8, 9] ]
+  mtx3 = [ [0, 1, 3, 5],            # [ [0, 0, 0, 0],
+           [7, 8, 2, 0],            #   [0, 0, 0, 0],
+           [1, 5, 7, 2] ]           #   [0, 5, 7, 0] ]
+  mtx4 = [ [3, 6, 8, 7],            # [ [3, 6, 8 ,7],
+           [2, 3, 1, 4] ]           #   [2, 3, 1, 4] ]
 
-test_rotate_matrix()
+  assert zero_matrix(mtx)  == []
+  assert zero_matrix(mtx1) == [ [0, 0] ]
+  assert zero_matrix(mtx2) == [ [0, 3, 1], [0, 0, 0], [0, 0, 0], [0, 8, 9] ]
+  assert zero_matrix(mtx3) == [ [0, 0, 0, 0], [0, 0, 0, 0,], [0, 5, 7, 0] ]
+  assert zero_matrix(mtx4) == [ [3, 6, 8, 7], [2, 3, 1, 4] ]
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
   pytest.main()
