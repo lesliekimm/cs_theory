@@ -23,21 +23,51 @@ def reverse_words(string):
 
   for index_front in xrange(len(string_char) / 2):
     index_back = -index_front - 1
-
     string_char[index_front], string_char[index_back] = string_char[index_back], string_char[index_front]
 
-    # all chars are reversed. now you need to reverse each individual word
+  front = 0
+  back = 0
+
+  while back < len(string_char):
+    while string_char[back] != ' ':
+      back += 1
+      if back == len(string_char):
+        break;
+
+    word_front = front
+    word_back = back - 1
+
+    for word_front in xrange(((word_back - word_front) / 2) + 1):
+      word_back = word_back - word_front
+
+      string_char[word_front + front], string_char[word_back] = string_char[word_back], string_char[word_front + front]
+
+    front = back + 1
+    back += 1
 
   reversed = ''.join(string_char)
 
-  print reversed
-
   return reversed
 
-message = "find you will"
-reverse_words(message)
+def test_reverse_words():
+  message_empty = ""
+  message_double_space = "find  you will"
+  message_short = "find you will "
+  message_short_space = " find you will "
+  message = "find you will pain only go you recordings security the into if"
+  
+  assert reverse_words(message_empty) == ""
+  assert reverse_words(message_double_space) == "will you  find"
+  assert reverse_words(message_short) == " will you find"
+  assert reverse_words(message_short_space) == " will you find "
+  assert reverse_words(message) == "if into the security recordings you go only pain will you find"
 
 
-# def test_reverse_words():
-#   message = "find you will pain only go you recordings security the into if"
-#   assert reverse_words(message) == "if into the security recordings you go only pain will you find"
+
+
+
+
+
+
+
+
