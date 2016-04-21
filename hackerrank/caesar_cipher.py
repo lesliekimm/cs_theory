@@ -42,19 +42,24 @@
 
 import sys
 
-# n = int(raw_input().strip())
-# s = raw_input().strip()
-# k = int(raw_input().strip())
-
-n = 11
-s = "middle-Outz"
-k = 2
+n = int(raw_input().strip())
+s = raw_input().strip()
+k = int(raw_input().strip())
 
 encoded = ""
 
 for index in range(n):
   if s[index].isalpha():
-    encoded += chr(ord(s[index]) + k)
+    asc = (ord(s[index]) + k)
+    if asc > 96:
+      asc = asc % 122
+      if asc < 97:
+        asc += 96
+    elif asc > 64 and asc < 91:
+      asc = asc % 91
+      if asc < 65:
+        asc += 64
+    encoded += chr(asc)
   else:
    encoded += s[index]
 
